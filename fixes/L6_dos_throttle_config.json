@@ -1,0 +1,21 @@
+{
+  "lambda_reserved_concurrency": {
+    "function": "DVSA-ORDER-MANAGER",
+    "ReservedConcurrentExecutions": 10,
+    "console_path": "Lambda -> DVSA-ORDER-MANAGER -> Configuration -> Concurrency -> Reserve concurrency"
+  },
+  "api_gateway_method_throttling": {
+    "stage": "Stage",
+    "console_path": "API Gateway -> DVSA-APIS -> Stages -> Stage -> Method-level throttling",
+    "methodSettings": {
+      "/order/POST": {
+        "throttlingRateLimit": 10,
+        "throttlingBurstLimit": 20
+      }
+    }
+  },
+  "aws_cli_equivalent": {
+    "set_reserved_concurrency": "aws lambda put-function-concurrency --function-name DVSA-ORDER-MANAGER --reserved-concurrent-executions 10 --region us-east-1",
+    "set_stage_throttle": "aws apigateway update-stage --rest-api-id zeb7lgg5cl --stage-name Stage --patch-operations op=replace,path=/*/*/throttling/rateLimit,value=10 op=replace,path=/*/*/throttling/burstLimit,value=20 --region us-east-1"
+  }
+}
